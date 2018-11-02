@@ -10,18 +10,31 @@
 		height: 2000;	
 		}
 	</style>
+	
+   <p id="btn"> Apple will die </p>
+   
    
     <script type="text/javascript">
-        function insert(){
+        function insert(){    	
+    var x = Math.floor(Math.random() * 256);
+    var y = Math.floor(Math.random() * 256);
+    var z = Math.floor(Math.random() * 256);
+    var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+   
+   
         	var imgs = ["This.png", "Nik.png"];
-        	
             var src = document.getElementById("gamediv");
             var img = document.createElement("img");
-            img.src = imgs[1];
+            img.src = imgs[0];
             src.appendChild(img);
+            
+            document.getElementById("btn").style.fontSize = "100px"; 
+            document.getElementById("btn").style.color =  bgColor;   
         }
+        
      </script>
- </head>
+     
+      </head>
  <body>
      <div id="gamediv">
          
