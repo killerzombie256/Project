@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+<style>
+html { font-family: monospace; }
+.rect { stroke: white; stroke-width: 2px; }
+button {
+	background: black;
+	padding: 5px 10px 6px;
+	color: #fff;
+	font-weight: bold;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 0 1px 3px #999;
+	-webkit-box-shadow: 0 1px 3px #999;
+}
+button:disabled {
+	color: gray;
+	background: darkgray;
+}
+</style>
+<body>
+	<div class="container" style="text-align: center;">
+	<div>
+		<h3><i>Gnome sort</i></h3><button id="replay_button">Sort</button><button id="new_button">New values</button>
+		<span style="display: none;" id="iterations"></span>
+	</div>
+	<svg></svg>
+	<div>
+	<span>slow</span><input type="range" id="range-speed" min="5" max="125"/><span>fast</span>
+	</div>
+	</div>
+</body>
+<script>
+var margin = {top: 40, right: 40, bottom: 40, left: 40},
+    width = 720 - margin.left - margin.right,
+    height = 360 - margin.top - margin.bottom,
+		elements = 25,
+		line_width = width / elements,
+		unsorted = [],
+		animation_duration = 50,
+		default_color = '#6495ed',
+		search_color = '#cd5c5c',
+		search_color2 = '#4477cc';
+var svg = d3.select("svg")
+		.attrs({
+				"width": width + margin.left + margin.right,
+    		"height": height + margin.top + margin.bottom
+		})
+  	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+bindButtons();
+randomize(true);
+function bindButtons(){
+		document.getElementById('replay_button').onclick = display;
+		document.getElementById('new_button').onclick = randomize;
+		var speed_input = document.getElementById('range-speed');
+		speed_input.value = 80;
+		speed_input.onchange = function(){ animation_duration = Math.abs(130 - +this.value); };
+}
+function populate(data) {
+	  svg.selectAll('rect')
+		    .data(data)
+				.enter().append('rect')
+				.attrs((d, i) => ({
+						id: 'r' + i, class: 'rect',
+						x: i * line_width, y: height - d.val,
+						height: d.val, width: line_width, fill: default_color
+				}));
+};
+function update(data) {
+	  svg.selectAll('rect')
+		    .data(data)
+				.transition()
+				.each(function() {
+						d3.selectAll('rect')
+							.transition()
+							.attrs((d, i) => ({
+								x: i * line_width, y: height - d.val, height: d.val
+							}));
+			  });
+};
+function randomize(first=false) {
+		svg.selectAll('rect').style('fill', default_color);
+		unsorted = [];
+		for (var i=0; i<elements; i++) {
+			unsorted.push({ val: Math.random() * height, pos: i });
+		}
+		if(first) populate(unsorted);
+		let a = document.getElementById('replay_button');
+		a.disabled = false;
+		a.innerHTML = "Sort";
+		update(unsorted);
+		steps = gnomeSortWithSteps(unsorted);
+};
+function display(){
+		var i = 0;
+		let button = this;
+		button.disabled = 'disabled';
+		button.innerHTML = 'Replay';
+		document.getElementById('new_button').disabled = "disabled";
+		d3.select('#itterations').text('0');
+		let next = function(){
+				if(i == steps.length){
+						button.disabled = false;
+						document.getElementById('new_button').disabled = false;
+						return;
+				}
+				let anim = steps[i].animation;
+				if(anim == "update"){
+						update(JSON.parse(steps[i].data));
+				} else if (anim == "highlight"){
+						svg.select('#r'+steps[i].data).style('fill', steps[i].color || search_color);
+				} else if (anim == "clear-highlight"){
+						svg.select('#r'+steps[i].data).style('fill', default_color);
+				}
+				i++;
+				setTimeout(next, animation_duration);
+		};
+		next();
+}
+function gnomeSortWithSteps(a) {
+		function swap(arr, a, b) {
+				if (a === b) return;
+				var temp = arr[a];
+				arr[a] = arr[b];
+				arr[b] = temp;
+		};
+    function moveBack(i) {
+		    for( ; i > 0 && a[i-1].val > a[i].val; i--) {
+						steps.push({animation: 'highlight', data: i, color: i === j ? search_color2 : search_color});
+						steps.push({animation: 'highlight', data: i-1});
+						swap(a, i, i-1);
+						steps.push({animation: 'update', data: JSON.stringify(a)});
+						steps.push({animation: 'clear-highlight', data: i-1});
+						if(i != j)
+							steps.push({animation: 'clear-highlight', data: i});
+				}
+	  };
+		let steps = [], j;
+	  for (let i = 1; i < a.length; i++) {
+				steps.push({animation: 'highlight', data: i, color: search_color2});
+	      if (a[i-1].val > a[i].val){
+					j = i;
+					moveBack(i);
+				}
+				steps.push({animation: 'clear-highlight', data: i});
+	  }
+	  return steps;
+}
+</script>

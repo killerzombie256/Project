@@ -47,6 +47,8 @@
 	background-color: #CDE5F7;
 	outline: none;
 	}
+    
+	
 	/*Green Button Style*/
 	.form-container .btn{
 	background-color: #DD313A;
@@ -72,16 +74,15 @@
 <button class="open-button"onClick="openForm();colorchange()">ChatBox</button>
 
 <div class="chat-popup" id="myForm">
-	<form action="https://youtube.com" class="form-container">
+	<form action="" id = "test" class="form-container">
 		<h1>Chat</h1>
-		
 		<label for="msg"><b>Message</b></label>
-		<textarea placeholder="Type message" name="msg" required></textarea>
-		
+		<textarea id="text" placeholder="Type message" name="msg" required></textarea>
 		<button id="button" type="submit" class="btn">SEND</button>
 		<button id= "button1" type="button" class="btn cancel" onclick="closeForm();colorchange()">CLOSE</button>
 	</form>
-</div>
+	</div>
+
 </html>
 <script>
 	function openForm() {
@@ -93,6 +94,10 @@
 	function colorchange(){
 		setInterval(timer, 1000);
 	} 
+	
+	function send(){
+		document.getElementById("text").innerhtml = user;
+	}
 	function timer(){
 		var R= Math.floor(Math.random()*256);
 	var G= Math.floor(Math.random()*256);
@@ -101,4 +106,5 @@
 	document.getElementById("button").style.backgroundColor = randColor;
 	document.getElementById("button1").style.backgroundColor = randColor;
 	}
+	console.log(user);
 </script>

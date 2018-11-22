@@ -1,0 +1,97 @@
+<!doctype HTML>
+<html>
+<body>	
+	<button id="btn" onclick="insert()">Click me</button>
+<p id="output"></p>	
+<p id="output2"></p>
+<p id="output3"></p>
+<p id="output4"></p>
+<p id="output5"></p>
+<p id="txt"></p>
+
+
+
+<script>	
+
+var p = 0;
+var t;
+var timer_is_on = 0;
+
+function timedCount() {
+    txt.innerHTML = p;
+    p = p + 1;
+    t = setTimeout(timedCount, 1);
+}
+
+function startCount() {
+    if (!timer_is_on) {
+        timer_is_on = 1;
+        timedCount();
+    }
+}
+
+function stopCount() {
+    clearTimeout(t);
+    timer_is_on = 0;
+    
+}
+
+
+var compare = 0;
+var swap = 0;
+var randArr = [];
+var b = "0";
+var c = "";
+for(var i=0; i < 30000; i++){
+	var randVar = Math.floor(Math.random()*100);
+	randArr[i] = randVar;
+	var a = randVar.toString();
+	b = c;
+	c = b + ", " + a;
+}
+	var sortArr = randArr;
+	
+
+window.onload=startCount();
+
+for(var i = 0; i < sortArr.length;i++){
+	compare++;
+	var x = sortArr[i];
+	var y = sortArr[i+1];
+if(x < y && i > -1) {
+	sortArr[i+1]=x;
+	sortArr[i]=y;
+	i = i-2;
+	swap++;
+}
+}
+window.onload = function stopCount() {
+    clearTimeout(t);
+    timer_is_on = 0;
+    
+};
+
+var e = "0";
+var f = "";
+for(var i = 0; i < sortArr.length; i++){
+	var d = sortArr[i].toString();
+	e = f;
+	f = e + ", " + d;
+}
+function Test(){
+output4.innerHTML = "compares: " + compare +"<br>"+"swaps: " + swap;
+output3.innerHTML = f;
+txt.innerHTML = p;
+output.innerHTML = c;
+output2.innerHTML = "<br>";
+}
+</script>
+</body>	
+</html>
+
+<!-- 
+Sources:
+-https://www.devcurry.com/2011/07/swap-variables-in-javascript-different.html
+-https://www.geeksforgeeks.org/gnome-sort-a-stupid-one/
+-https://www.revolvy.com/page/Gnome-sort
+-->
