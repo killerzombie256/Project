@@ -1,0 +1,73 @@
+<html>
+  <head>
+  <meta charset="utf-8">
+  <title>JavaScript program of Quick sort</title>
+  </head>
+  <body>
+  	
+  	
+  	<div id="make">
+  	<p id="p1"></p>
+  </div>
+  
+   <p id="output"></p>
+  
+  
+  </body>
+  
+  <script>
+  
+  
+  var randArr = [];
+var b = "0";
+var c = "";
+for(var i=0; i < 1000; i++){
+	var randVar = Math.floor(Math.random()*100);
+	randArr[i] = randVar;
+	var a = randVar.toString();
+	b = c;
+	c = b +" "+ a;
+}
+	var sortArr = randArr;
+	  output.innerHTML = c;
+  
+  	var compare = 0;
+	var swap = 0;
+  	
+  	function bubble_Sort()
+{
+    var swapp;
+    var n = randArr.length-1;
+    var x = randArr;
+    do {
+        swapp = false;
+        for (var i=0; i < n; i++){
+        	compare++;
+            if (x[i] > x[i+1])
+            {
+               var temp = x[i];
+               x[i] = x[i+1];
+               x[i+1] = temp;
+               swapp = true;
+            swap++;
+            }
+        }
+        n--;
+    } while (swapp);
+ return x; 
+}
+
+//output4.innerHTML = "compares: " + compare +"<br>"+"swaps: " + swap;
+
+var para = document.createElement("p");
+var node = document.createTextNode(bubble_Sort(c).join(" "));
+var x= document.createTextNode("compares: " + compare + " " +"swaps: " + swap);
+
+para.appendChild(node);
+var element = document.getElementById("make");
+element.appendChild(x);
+element.appendChild(para);
+  </script>
+ 
+  
+</html>

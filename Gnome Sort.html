@@ -1,7 +1,6 @@
 <!doctype HTML>
 <html>
 <body>	
-	<button id="btn" onclick="insert()">Click me</button>
 <p id="output"></p>	
 <p id="output2"></p>
 <p id="output3"></p>
@@ -33,16 +32,14 @@ function startCount() {
 function stopCount() {
     clearTimeout(t);
     timer_is_on = 0;
-    
 }
-
 
 var compare = 0;
 var swap = 0;
 var randArr = [];
 var b = "0";
 var c = "";
-for(var i=0; i < 30000; i++){
+for(var i=0; i < 100; i++){
 	var randVar = Math.floor(Math.random()*100);
 	randArr[i] = randVar;
 	var a = randVar.toString();
@@ -50,9 +47,10 @@ for(var i=0; i < 30000; i++){
 	c = b + ", " + a;
 }
 	var sortArr = randArr;
-	
+	output.innerHTML = c;
+	output2.innerHTML = "<br>";
 
-window.onload=startCount();
+window.addEventListener('load', startCount);
 
 for(var i = 0; i < sortArr.length;i++){
 	compare++;
@@ -65,11 +63,7 @@ if(x < y && i > -1) {
 	swap++;
 }
 }
-window.onload = function stopCount() {
-    clearTimeout(t);
-    timer_is_on = 0;
-    
-};
+//window.addEventListener('load', stopCount);
 
 var e = "0";
 var f = "";
@@ -78,20 +72,11 @@ for(var i = 0; i < sortArr.length; i++){
 	e = f;
 	f = e + ", " + d;
 }
-function Test(){
+
 output4.innerHTML = "compares: " + compare +"<br>"+"swaps: " + swap;
 output3.innerHTML = f;
 txt.innerHTML = p;
-output.innerHTML = c;
-output2.innerHTML = "<br>";
-}
+
 </script>
 </body>	
 </html>
-
-<!-- 
-Sources:
--https://www.devcurry.com/2011/07/swap-variables-in-javascript-different.html
--https://www.geeksforgeeks.org/gnome-sort-a-stupid-one/
--https://www.revolvy.com/page/Gnome-sort
--->
