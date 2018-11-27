@@ -10,29 +10,7 @@
 
 
 
-<script>	
-
-var p = 0;
-var t;
-var timer_is_on = 0;
-
-function timedCount() {
-    txt.innerHTML = p;
-    p = p + 1;
-    t = setTimeout(timedCount, 1);
-}
-
-function startCount() {
-    if (!timer_is_on) {
-        timer_is_on = 1;
-        timedCount();
-    }
-}
-
-function stopCount() {
-    clearTimeout(t);
-    timer_is_on = 0;
-}
+<script>
 
 var compare = 0;
 var swap = 0;
@@ -50,7 +28,8 @@ for(var i=0; i < 100; i++){
 	output.innerHTML = c;
 	output2.innerHTML = "<br>";
 
-window.addEventListener('load', startCount);
+
+
 
 for(var i = 0; i < sortArr.length;i++){
 	compare++;
@@ -63,7 +42,6 @@ if(x < y && i > -1) {
 	swap++;
 }
 }
-//window.addEventListener('load', stopCount);
 
 var e = "0";
 var f = "";

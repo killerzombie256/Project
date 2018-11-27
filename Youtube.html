@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
+	<link href='https://fonts.googleapis.com/css?family=Black Ops One' rel='stylesheet'>
 <title>Test Site</title>
-<header onload="colorchange()" id="Header">Website Template</header>
-<body>
-	
+
+<header onclick="colorchange()" id="Header">Cod Zombies</header>
+<body id="myImg" background="COD.jpg">
+	<button onclick="imgchange()">
+		
+	</button>
 	
 	
 	</body>
+	
 	</html>
 	<script>
-	
-	
-	
 	function colorchange(){
 		setInterval(timer, 1000);
 	} 
@@ -20,15 +22,18 @@
     var y = Math.floor(Math.random() * 256);
     var z = Math.floor(Math.random() * 256);
     var bgColor = "rgb(" + x + "," + y + "," + z + ")";
-    
+	
 		var A = document.getElementById('Header');
-	A.style.fontSize = "100px";
-	A.style.marginLeft = "400px";
+	A.style.fontSize = "60px";
+	A.style.fontFamily = "Black Ops One";
+	A.style.marginLeft = "175px";
 	A.style.color = bgColor;
-	
-	
 	}
-		
-		
-		
+	function imgchange(){
+		setInterval(timer2, 1000);
+	} 
+	function timer2(){
+		document.getElementById("myImg").src ="Nik.png";
+	
+		}
 	</script>
